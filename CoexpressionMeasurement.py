@@ -11,6 +11,7 @@ import glob
 from skimage import morphology
 
 
+
 glob_dir = input("Enter Directory ")
 glob_File_type = input("Enter File Extension ")
 
@@ -20,6 +21,10 @@ size_filter_2 = input("size_filer 2: ")
 output_file = input("output file: ")
 #def filter(input_request, size_filter_1, size_filter_2):
 def filter(file, size_filter_1, size_filter_2):
+    """this script takes a directory of png images as input
+    and returns a csv file with cell counts for each channel
+    and the number of cells coexpressing both channels"""
+    
 
 
     png_file = io.imread(file)
