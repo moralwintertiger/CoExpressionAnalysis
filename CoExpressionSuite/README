@@ -1,0 +1,2 @@
+This suite of files allows for measurement of coexpression between two markers as well as generating a filtered image of
+coexpressing cells. Can be called with ```coex-main.py``` and ```testdir``` included as an example png file.
