@@ -1,0 +1,46 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import kde
+import seaborn as sns
+
+import pylab as pl
+from matplotlib import cm
+import numpy as np
+from scipy import interpolate
+from scipy import ndimage
+from scipy.misc import imsave
+import imageio
+import png
+from PIL import Image
+from numpngw import write_png
+
+
+def filter(file, size_filter_1, size_filter_2):
+
+
+    png_file = io.imread(file)
+    channel1, channel2 = [png_file[:,:,0], png_file[:,:,1]]
+
+    edges_red = canny(channel1)
+    edges_green = canny(channel2)
+
+    fill_cells_red = ndi.binary_fill_holes(edges_red)
+    fill_cells_green = ndi.binary_fill_holes(edges_green)
+
+    cells_cleaned_red = morphology.remove_small_objects(fill_cells_red, int(size_filter_1))
+    cells_cleaned_green = morphology.remove_small_objects(fill_cells_green, int(size_filter_2))
+
+    label_im_red, nb_labels_red = ndimage.label(cells_cleaned_red, structure=None)
+    label_im_green, nb_labels_green = ndimage.label(cells_cleaned_green, structure=None)
+
+    overlap = np.array(cells_cleaned_green & cells_cleaned_red)
+
+
+    cleaned_overlap = morphology.remove_small_objects(overlap, min(int(size_filter_1),int(size_filter_2)))
+
+
+
+    label_im_overlap, nb_labels_overlap = ndimage.label(cleaned_overlap, structure=None)
+
+    return (nb_labels_red, nb_labels_green, nb_labels_overlap)
+    
